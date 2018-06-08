@@ -3,6 +3,10 @@
 This library contains a improved tSNE implementation that runs in the browser.
 
 
+My demo link at https://hpssjellis.github.io/tfjs-tsne/
+
+
+
 ## Installation & Usage
 
 You can use tfjs-tsne via a script tag or via NPM
