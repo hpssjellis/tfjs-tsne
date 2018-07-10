@@ -29,7 +29,7 @@ You can then do the following
 const data = tf.randomUniform([2000,10]);
 
 // Get a tsne optimizer
-const tsneOpt = tsne.optimizer(data);
+const tsneOpt = tsne.tsne(data);
 
 // Compute a T-SNE embedding, returns a promise.
 // Runs for 1000 iterations be default.
@@ -44,23 +44,23 @@ tsneOpt.compute().then(() => {
 ### Via NPM
 
 ```
-yarn add tensorflow@tfjs-tsne
+yarn add @tensorflow/tfjs-tsne
 ```
 or
 ```
-npm install tensorflow@tfjs-tsne
+npm install @tensorflow/tfjs-tsne
 ```
 
 Then
 
 ```js
-import tsne from '@tensorflow/tfjs-tsne';
+import * as tsne from '@tensorflow/tfjs-tsne';
 
 // Create some data
 const data = tf.randomUniform([2000,10]);
 
 // Initialize the tsne optimizer
-const tsneOpt = tsne.optimizer(data);
+const tsneOpt = tsne.tsne(data);
 
 // Compute a T-SNE embedding, returns a promise.
 // Runs for 1000 iterations be default.
@@ -74,13 +74,13 @@ tsneOpt.compute().then(() => {
 
 ## API
 
-### tsne.optimizer(data: tf.Tensor2d, config?: TSNEConfiguration)
+### tsne.tsne(data: tf.Tensor2d, config?: TSNEConfiguration)
 
 Creates and returns a TSNE optimizer.
 
 - `data` must be a Rank 2 tensor. Shape is [numPoints, dataPointDimensions]
 - `config` is an optinal object with the following params (all are optional):
-  - perplexity: number — defaults to 30. Max value is 42
+  - perplexity: number — defaults to 18. Max value is defined by hardware limitations.
   - verbose: boolean — defaults to false
   - exaggeration: number — defaults to 4
   - exaggerationIter: number — defaults to 300
@@ -149,7 +149,13 @@ async function iterativeTsne() {
 iterativeTsne();
 ```
 
+### Example
+
+We also have an [example](https://github.com/tensorflow/tfjs-examples/tree/master/tsne-mnist-canvas) of using this library to perform TSNE on the MNIST dataset [here](https://github.com/tensorflow/tfjs-examples/tree/master/tsne-mnist-canvas).
+
 ### Limitations
+
+This library requires WebGL 2 support and thus will not work on certain devices, mobile devices especially. Currently it best works on desktop devices.
 
 From our current experiments we suggest limiting the data size passed to this implementation
 to data with a shape of [10000,100], i.e. up to 10000 points with 100 dimensions each. You can do more but it might slow down.
